@@ -1,0 +1,15 @@
+{
+  "name": "PokemonManager",
+  "version": "0.0.1",
+  "description": "A MEAN app that allows users to manage their pokemons",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3",
+    "mongodb": "^2.1.6"
+  }
+}
