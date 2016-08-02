@@ -2,7 +2,7 @@ var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
-var Pokeio = require('pokemon-go-node-api');
+var PokemonGO = require('pokemon-go-node-api');
 var ObjectID = mongodb.ObjectID;
 
 var CONTACTS_COLLECTION = "contacts";
@@ -66,7 +66,7 @@ function handleError(res, reason, message, code) {
   }
 
   // initialize user
-  var user = new Pokeio();
+  var user = new PokemonGO.Pokeio();
   user.init(username, password, location, provider, function(err) {
       if (err) throw err;
 
