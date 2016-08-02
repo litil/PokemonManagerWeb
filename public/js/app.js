@@ -1,4 +1,4 @@
-angular.module("contactsApp", ['ngRoute'])
+angular.module("pokemonManagerApp", ['ngRoute'])
     .config(function($routeProvider) {
         $routeProvider
             .when("/", {
