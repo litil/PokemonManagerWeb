@@ -66,7 +66,7 @@ function handleError(res, reason, message, code) {
   }
 
   // initialize user
-  var user = new PokemonGO.Pokeio();
+  var user = new Pokeio();
   user.init(username, password, location, provider, function(err) {
       if (err) throw err;
 
