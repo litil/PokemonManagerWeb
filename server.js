@@ -2,7 +2,7 @@ var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
-var PokemonGO = require('./poke.io.js');
+//var PokemonGO = require('./poke.io.js');
 var ObjectID = mongodb.ObjectID;
 
 var CONTACTS_COLLECTION = "contacts";
@@ -46,6 +46,7 @@ function handleError(res, reason, message, code) {
  * "/auth"
  * POST: signin to the Pokemon API
  */
+ /*
  app.post("/auth", function(req, res) {
    // check params emptiness
    if(!(req.body.username && req.body.password && req.body.location && req.body.provider)) {
@@ -74,6 +75,7 @@ function handleError(res, reason, message, code) {
   });
 
  });
+ */
 
 
 /*  "/contacts"
