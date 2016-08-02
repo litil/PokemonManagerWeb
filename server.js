@@ -2,6 +2,7 @@ var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
+var PokemonGO = require('./poke.io.js');
 var ObjectID = mongodb.ObjectID;
 
 var CONTACTS_COLLECTION = "contacts";
@@ -40,6 +41,40 @@ function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
   res.status(code || 500).json({"error": message});
 }
+
+/*
+ * "/auth"
+ * POST: signin to the Pokemon API
+ */
+ app.post("/auth", function(req, res) {
+   // check params emptiness
+   if(!(req.body.username && req.body.password && req.body.location && req.body.provider)) {
+     handleError(res, "Invalid user input", "Must provide a username, a password, a location and a provider", 400);
+   }
+
+  // check params validity
+  var provider = req.body.provider;
+  var username = req.body.username;
+  var password = req.body.password;
+  var location = {
+      type: 'name',
+      name: req.body.location || '7 place de la defense, Courbevoie'
+  };
+  if (provider != 'ptc' && provider != 'google'){
+    handleError(res, "Invalid user input", "The provider must be either ptc or google", 400);
+  }
+
+  // initialize user
+  var user = new PokemonGO.Pokeio();
+  user.init(username, password, location, provider, function(err) {
+      if (err) throw err;
+
+      // return the user
+      res.status(200).json(user);
+  });
+
+ });
+
 
 /*  "/contacts"
  *    GET: finds all contacts
