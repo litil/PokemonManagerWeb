@@ -10,7 +10,8 @@
   "dependencies": {
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
-    "mongodb": "^2.1.6"
+    "mongodb": "^2.1.6",
+    "pokemon-go-node-api": "^1.4.0"
   },
   "devDependencies": {
     "pokemon-go-node-api": "^1.4.0"
