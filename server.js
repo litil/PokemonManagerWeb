@@ -70,6 +70,8 @@ function handleError(res, reason, message, code) {
   user.init(username, password, location, provider, function(err) {
       if (err) throw err;
 
+      console.log(JSON.stringify(user, null, 4));
+
       // return the user
       res.status(200).json(user);
   });
