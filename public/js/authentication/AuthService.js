@@ -1,4 +1,4 @@
-// public/app/components/auth/authController.js
+// public/js/authentication/AuthService.js
 
 (function() {
 
