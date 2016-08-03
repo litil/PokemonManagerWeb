@@ -5,17 +5,20 @@ var mongodb = require("mongodb");
 var PokemonGO = require('pokemon-go-node-api');
 var ObjectID = mongodb.ObjectID;
 
-var CONTACTS_COLLECTION = "contacts";
 
 var app = express();
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
+// database url and collection
+var MONGO_DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/pokemanager';
+var CONTACTS_COLLECTION = "contacts";
+
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
+mongodb.MongoClient.connect(MONGO_DB_URL, function (err, database) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -31,6 +34,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
     console.log("App now running on port", port);
   });
 });
+
 
 
 // CONTACTS API ROUTES BELOW
@@ -68,13 +72,8 @@ function handleError(res, reason, message, code) {
   // initialize user
   var user = new PokemonGO.Pokeio();
   user.init(username, password, location, provider, function(err) {
-      console.log('bim');
       if (err) throw err;
-      console.log('boum');
-
-      console.log('1[i] Current location: ' + a.playerInfo.locationName);
-      console.log('1[i] lat/long/alt: : ' + a.playerInfo.latitude + ' ' + a.playerInfo.longitude + ' ' + a.playerInfo.altitude);
-      console.log(JSON.stringify(user, null, 4));
+      console.log('User successfully logged in');
 
       // return the user
       res.status(200).json(user);

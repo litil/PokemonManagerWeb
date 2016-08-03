@@ -7,12 +7,17 @@
     angular
         .module('pokemonManagerApp')
         .service("AuthService", function($http) {
-            this.signin = function(user) {
-                debugger;
 
+            /**
+             * This methods does a POST request to the /auth API endpoint to
+             * authenticate the user with its credentials, the given provider
+             * and a location.
+             *
+             * @param user contains all data needed to signin in
+             */
+            this.signin = function(user) {
                 return $http.post("/auth", user).
                     then(function(response) {
-                        debugger;
                         return response;
                     }, function(response) {
                         alert("Error signin in the user.");
