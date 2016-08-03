@@ -51,7 +51,7 @@ function handleError(res, reason, message, code) {
  *
  * It checks for username, password, location and provider.
  */
- app.post("/auth", function(req, res) {
+ app.post("/signin", function(req, res) {
    // check params emptiness
    if(!(req.body.username && req.body.password && req.body.location && req.body.provider)) {
      handleError(res, "Invalid user input", "Must provide a username, a password, a location and a provider", 400);
