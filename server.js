@@ -75,9 +75,6 @@ function handleError(res, reason, message, code) {
       if (err) throw err;
       console.log('User successfully logged in');
 
-
-      console.log('/n/n biiiim ' + JSON.stringify(user, null, 4));
-
       // return the user
       res.status(200).json(user);
   });
