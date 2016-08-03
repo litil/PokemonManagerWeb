@@ -27,7 +27,7 @@
         $scope.signin = function(user) {
             AuthService.signin(user).then(function(response) {
                 // save player info into local storage
-                if (!(response.data && response.data.playerInfo)){
+                if (!response || !response.data || !response.data.playerInfo){
                   alert('No player info has been found in the response');
                   return ;
                 }
