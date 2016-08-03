@@ -68,8 +68,12 @@ function handleError(res, reason, message, code) {
   // initialize user
   var user = new PokemonGO.Pokeio();
   user.init(username, password, location, provider, function(err) {
+      console.log('bim');
       if (err) throw err;
+      console.log('boum');
 
+      console.log('1[i] Current location: ' + a.playerInfo.locationName);
+      console.log('1[i] lat/long/alt: : ' + a.playerInfo.latitude + ' ' + a.playerInfo.longitude + ' ' + a.playerInfo.altitude);
       console.log(JSON.stringify(user, null, 4));
 
       // return the user
