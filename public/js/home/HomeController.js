@@ -1,4 +1,4 @@
-// public/js/home/HomeController.js
+// public/js/profile/HomeController.js
 
 (function() {
 
@@ -9,9 +9,9 @@
         .controller('HomeController', HomeController);
 
 
-    function HomeController($scope) {
+    function HomeController($scope, ProfileService) {
 
-        
+        $scope.profile = ProfileService.getProfile();
 
     }
 

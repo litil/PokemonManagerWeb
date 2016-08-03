@@ -75,11 +75,48 @@ function handleError(res, reason, message, code) {
       if (err) throw err;
       console.log('User successfully logged in');
 
+
+      console.log('/n/n biiiim ' + JSON.stringify(user, null, 4));
+
       // return the user
       res.status(200).json(user);
   });
 
  });
+
+
+ /*
+  * "/profile"
+  * GET: fetch basic profile information corresponding to the given user.
+  *
+  */
+  app.post("/profile", function(req, res) {
+    // check params emptiness
+    if(!(req.body.user)) {
+      handleError(res, "Invalid user input", "Must provide user", 400);
+    }
+
+   // initialize user
+   var user = new PokemonGO.Pokeio();
+   user.playerInfo = req.body.user.playerInfo;
+   user.GetProfile(function(err, profile) {
+         if (err) throw err;
+
+         console.log('1[i] Username: ' + profile.username);
+         console.log('1[i] Poke Storage: ' + profile.poke_storage);
+         console.log('1[i] Item Storage: ' + profile.item_storage);
+
+         // return the profile
+         res.status(200).json(profile);
+     });
+
+  });
+
+
+
+
+
+
 
 /*  "/contacts"
  *    GET: finds all contacts

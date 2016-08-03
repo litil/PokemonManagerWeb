@@ -9,7 +9,7 @@
         .controller('AuthController', AuthController);
 
 
-    function AuthController($scope, AuthService) {
+    function AuthController($scope, $location, ProfileService, AuthService) {
 
         // initialize the user variable - debug purpose only
         $scope.user = {};
@@ -26,7 +26,19 @@
          */
         $scope.signin = function(user) {
             AuthService.signin(user).then(function(response) {
-                debugger;
+                // save player info into local storage
+                if (!(response.data && response.data.playerInfo)){
+                  alert('No player info has been found in the response');
+                  return ;
+                }
+                localStorage.setItem("playerInfo", JSON.stringify(response.data.playerInfo));
+
+                // get user profile
+                var pokeUser = response.data;
+                ProfileService.getUserProfile(pokeUser).then(function(profile) {
+                  // redirect to /home
+                  $location.path( "/home" );
+                });
 
             }, function(response) {
                 alert(response);
