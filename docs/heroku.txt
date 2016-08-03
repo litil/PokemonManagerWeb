@@ -1,0 +1,13 @@
+# HEROKU
+
+
+## APPLICATION
+
+Application name : immense-everglades-90667
+
+
+## DATABASE
+
+We use Mongodb to store our data. This is an example to post a contact :
+
+curl -H "Content-Type: application/json" -d '{"firstName":"Chris", "lastName": "Chang", "email": "support@mlab.com"}' http://immense-everglades-90667.herokuapp.com/contacts

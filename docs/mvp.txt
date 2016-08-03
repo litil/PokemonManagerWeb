@@ -1,0 +1,18 @@
+# MVP
+
+The idea of this whole project is to play a bit with NodeJS by using an existing
+API, build our own backend which will be used by a quite simple frontend.
+
+The PokemongGo API I'm using here is the following one :
+    https://github.com/Armax/Pokemon-GO-node-api
+
+
+## QUICK TRANSFER
+
+What's really annoying with the actual (Android) PokemonGo client is that you
+have to scroll when seeing a pokemon details to see if it has strong attacks or
+lame ones.
+
+It would be nice to list all pokemons in our inventory with actual CP, stamina,
+needed / available candies, attacks ... and has a direct button to transfer
+them to the profesor.
