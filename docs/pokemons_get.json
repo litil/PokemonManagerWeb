@@ -1,0 +1,28 @@
+{
+  "count" : 125,
+  "max" : 250,
+  "pokemons" : [
+    {
+      "id" : 1,
+      "pokemon_id" : 1,
+      "name":"Bulbasaur",
+      "img":"http://www.serebii.net/pokemongo/pokemon/001.png",
+      "type": "Grass / Poison",
+      "height": "0.71 m",
+      "weight": "6.9 kg",
+      "candy" : {
+        "name" : "Bulbasaur Candy",
+        "count" : 127
+      },
+      "evolve" : {
+          "pokemon_id" : 13,
+          "needed_candies" : 25
+      },
+      "cp":201,
+      "stamina":38,
+      "stamina_max":38,
+      "favorite" : true,
+      "nickname" : "Bulbasaurus Rex"
+    }
+  ]
+}
