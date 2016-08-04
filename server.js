@@ -37,13 +37,14 @@ mongodb.MongoClient.connect(MONGO_DB_URL, function (err, database) {
 
 
 
-// CONTACTS API ROUTES BELOW
-
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
   res.status(code || 500).json({"error": message});
 }
+
+
+// AUTHENTICATION routes below
 
 /*
  * "/auth"
@@ -82,6 +83,8 @@ function handleError(res, reason, message, code) {
  });
 
 
+ // PROFILE routes below
+
  /*
   * "/profile"
   * GET: fetch basic profile information corresponding to the given user.
@@ -111,8 +114,72 @@ function handleError(res, reason, message, code) {
 
 
 
+  // POKEMONS routes below
 
+  /*
+   * "/profile"
+   * GET: fetch all already catched pokemons, formats and returns them. It
+   * fetches the pokemons by calling the GetInventory method.
+   *
+   */
+  app.get("/pokemons", function(req, res) {
+    // check params emptiness
+    if(!(req.body.user)) {
+      handleError(res, "Invalid user input", "Must provide user", 400);
+    }
 
+   // initialize user
+   var user = new PokemonGO.Pokeio();
+   user.playerInfo = req.body.user.playerInfo;
+   user.GetInventory(function(err, inventory) {
+         if (err) throw err;
+
+         // initialize response
+         var response = {};
+         var pokemonsArray = [];
+
+         var inventoryDelta = inventory.inventory_delta;
+         var inventoryItems = inventoryDelta.inventory_items;
+
+         // loop over inventory items
+         inventoryItems.forEach(function(item) {
+             if (item.inventory_item_data && item.inventory_item_data.pokemon){
+                 var pokemonTemp = item.inventory_item_data.pokemon;
+
+                 if (pokemonTemp != null && pokemonTemp.pokemon_id != null) {
+                     // the current entry is a pokemon
+                     var pokemonId = pokemonTemp.pokemon_id;
+                     var pokemonRet = {};
+
+                     // format the current pokemon data
+                     pokemonRet.pokemon_id = pokemonId;
+                     pokemonRet.name = PokemonsJSON.pokemon[pokemonId - 1].name;
+                     pokemonRet.img = PokemonsJSON.pokemon[pokemonId - 1].img;
+                     pokemonRet.type = PokemonsJSON.pokemon[pokemonId - 1].type;
+                     pokemonRet.height = pokemonTemp.height_m;
+                     pokemonRet.weight = pokemonTemp.weight_kg;
+                     pokemonRet.candy = null; // TODO
+                     pokemonRet.evolve = null;  // TODO
+                     pokemonRet.cp = pokemonTemp.cp;
+                     pokemonRet.stamina = pokemonTemp.stamina;
+                     pokemonRet.stamina_max = pokemonTemp.stamina_max;
+                     pokemonRet.favorite = pokemonTemp.favorite;
+                     pokemonRet.nickname = pokemonTemp.nickname;
+
+                     // add the current pokemon into the array
+                     pokemonsArray.push(pokemonRet);
+                }
+             }
+         });
+
+         response.pokemons = pokemonsArray;
+         response.count = pokemonsArray.length;
+         response.max = 250; //TODO find the real value
+
+         // return the profile
+         res.status(200).json(response);
+     });
+  });
 
 
 /*  "/contacts"

@@ -31,13 +31,13 @@
                   alert('No player info has been found in the response');
                   return ;
                 }
-                localStorage.setItem("playerInfo", JSON.stringify(response.data.playerInfo));
+                localStorage.setItem("user", JSON.stringify(response.data));
 
                 // get user profile
                 var pokeUser = response.data;
                 ProfileService.getUserProfile(pokeUser).then(function(profile) {
                   // redirect to /home
-                  $location.path( "/home" );
+                  $location.path( "/home");
                 });
 
             }, function(response) {
