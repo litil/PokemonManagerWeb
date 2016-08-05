@@ -1,4 +1,4 @@
-// public/js/profile/HomeController.js
+// public/js/home/HomeController.js
 
 (function() {
 

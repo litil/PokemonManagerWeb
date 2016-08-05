@@ -5,6 +5,10 @@ angular.module("pokemonManagerApp", ['ngRoute'])
                 controller: "HomeController",
                 templateUrl: "home.html"
             })
+            .when("/pokemons", {
+                controller: "PokemonController",
+                templateUrl: "pokemons.html"
+            })
             .when("/auth", {
                 controller: "AuthController",
                 templateUrl: "auth.html"

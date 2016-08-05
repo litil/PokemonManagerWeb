@@ -3,6 +3,7 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var PokemonGO = require('pokemon-go-node-api');
+var PokemonsJSON = require('./pokemons.json');
 var ObjectID = mongodb.ObjectID;
 
 
@@ -122,7 +123,7 @@ function handleError(res, reason, message, code) {
    * fetches the pokemons by calling the GetInventory method.
    *
    */
-  app.get("/pokemons", function(req, res) {
+  app.post("/pokemons", function(req, res) {
     // check params emptiness
     if(!(req.body.user)) {
       handleError(res, "Invalid user input", "Must provide user", 400);
@@ -172,9 +173,19 @@ function handleError(res, reason, message, code) {
              }
          });
 
+         // sort the pokemons array depending on the pokemons name and then cp
+         pokemonsArray.sort(
+           function(a, b){
+              if (a.pokemon_id != b.pokemon_id){
+                 return (a.pokemon_id - b.pokemon_id);
+              } else {
+                 return (a.cp - b.cp);
+              }
+           });
+
          response.pokemons = pokemonsArray;
-         response.count = pokemonsArray.length;
-         response.max = 250; //TODO find the real value
+         response.count = pokemonsArray.length; // the count in the mobile app includes the egg
+         response.max = inventoryItems.length; // not usre it is the real "max" value
 
          // return the profile
          res.status(200).json(response);

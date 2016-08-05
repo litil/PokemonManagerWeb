@@ -9,7 +9,7 @@
         .controller('AuthController', AuthController);
 
 
-    function AuthController($scope, $location, ProfileService, AuthService) {
+    function AuthController($scope, $rootScope, $location, ProfileService, AuthService) {
 
         // initialize the user variable - debug purpose only
         $scope.user = {};
@@ -35,7 +35,10 @@
 
                 // get user profile
                 var pokeUser = response.data;
+                $rootScope.pokeUser = pokeUser;
                 ProfileService.getUserProfile(pokeUser).then(function(profile) {
+                  $rootScope.profile = profile;
+
                   // redirect to /home
                   $location.path( "/home");
                 });
