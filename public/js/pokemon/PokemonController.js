@@ -34,10 +34,9 @@
                 // inner arrays will contains pokemons of the same family
                 var pokemons = response.data.pokemons;
                 var pokemonFamiliesArray = [];
-
-                debugger;
-
                 var arrayTemp = [];
+
+                // loop over returned pokemons to build the families arrays
                 for (var i = 0; i < pokemons.length; i++) {
                     if (i === 0){
                       arrayTemp.push(pokemons[i]);

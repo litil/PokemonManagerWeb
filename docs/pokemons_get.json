@@ -16,6 +16,7 @@
       },
       "evolve" : {
           "pokemon_id" : 13,
+          "pokemon_name" : "Weedle",
           "needed_candies" : 25
       },
       "cp":201,

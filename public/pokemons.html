@@ -7,12 +7,34 @@
 </div>
 
 
-<div class="container">
+<div class="container" id="pokemons_container">
 
   <div ng-repeat="family in pokemonByFamily">
-    <h3>
-      Name : {{ family[0].name }} ({{ family.length }})
-    </h3>
+    <div class="row family">
+      <!-- image -->
+      <div class="family_image col-md-1">
+        <img src="{{ family[0].img }}" />
+      </div>
+
+      <!-- name and type -->
+      <div class="family_info col-md-4">
+        <div class="family_name">{{ family[0].name }}</div>
+        <div class="family_type">{{ family[0].type }}</div>
+        <div class="family_count">{{ family.length }} pokemons</div>
+      </div>
+
+      <!-- stardust and candies -->
+      <div class="family_store col-md-3">
+        <div class="family_stardust">???</div>
+        <div class="family_candy">{{ family[0].candy.count }} {{ family[0].candy.name }}</div>
+      </div>
+
+      <!-- evolution -->
+      <div class="family_evolution col-md-3" ng-hide="{{ family[0].evolve }} | isEmpty">
+        <div class="family_name">???</div>
+        <div class="family_candy">{{ family[0].evolve.needed_candies }}</div>
+      </div>
+    </div>
 
     <div ng-repeat="pokemon in family">
       <span>
