@@ -10,6 +10,7 @@
 <div class="container" id="pokemons_container">
 
   <div ng-repeat="family in pokemonByFamily">
+    <!-- FAMILY HEADER -->
     <div class="row family">
       <!-- image -->
       <div class="family_image col-md-1">
@@ -36,11 +37,30 @@
       </div>
     </div>
 
-    <div ng-repeat="pokemon in family">
-      <span>
-        Name: {{pokemon.name}} ({{ pokemon.pokemon_id }})
-      </span>
-      <span> CP : {{pokemon.cp}}, points de vie: {{pokemon.stamina}}</span>
+      <!-- POKEMON CARDS -->
+    <div class="row family_pokemon_list">
+      <div class="col-md-4 pokemon_card" ng-repeat="pokemon in family">
+        <div class="row">
+          <!-- image -->
+          <div class="pokemon_image col-md-2">
+            <img src="{{ pokemon.img }}" />
+          </div>
+
+          <!-- name, size and date -->
+          <div class="pokemon_info col-md-8">
+            <div class="pokemon_name">{{ pokemon.name }} - {{ pokemon.nickname }}</div>
+            <div class="pokemon_size">{{ pokemon.height }}m - {{ pokemon.weight }}kg</div>
+            <div class="pokemon_date">23/07/2016 ?</div>
+          </div>
+        </div>
+
+        <div class="row pokemon_fight">
+            <div class="pokemon_cp col-md-4">cp: {{ pokemon.cp }}</div>
+            <div class="pokemon_stamina col-md-4">stamina: {{ pokemon.stamina }} / {{ pokemon.stamina_max }}</div>
+            <div class="pokemon_attacks col-md-4">attacks: ? / ?</div>
+        </div>
+      </div>
+
     </div>
 
   </div>

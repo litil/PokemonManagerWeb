@@ -9,6 +9,18 @@ body {
 /*                                                                       */
 /*************************************************************************/
 @important: 16px;
+@light-gray: #F8F8F8;
+@dark-gray: #E7E7E7;
+@black: #121212;
+
+@border-gray: 1px solid @dark-gray;
+@thick-border-black: 2px solid @black;
+
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+          border-radius: @radius;
+}
 
 /*************************************************************************/
 /*                                                                       */
@@ -18,6 +30,9 @@ body {
 #pokemons_container {
 
   .family{
+    border-top: @thick-border-black;
+    margin: 20px 0px 20px 0px;
+
     .family_image {
       img {
         width: 80px;
@@ -35,7 +50,32 @@ body {
         font-weight: bold;
       }
     }
+  }
 
+  .family_pokemon_list {
+
+    .pokemon_card {
+      background-color: @light-gray;
+      border: @border-gray;
+      .border-radius(10px);
+      margin-right: 20px;
+
+      .pokemon_image{
+        img {
+          width: 40px;
+          heigh: 40px;
+        }
+      }
+
+      .pokemon_info {
+        .pokemon_name {
+          font-weight: bold;
+        }
+        .pokemon_date {
+          font-weight: italic;
+        }
+      }
+    }
   }
 
 }
