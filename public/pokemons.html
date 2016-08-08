@@ -50,7 +50,7 @@
             <!-- name, size and date -->
             <div class="pokemon_info col-md-8">
               <div class="pokemon_name">{{ pokemon.name }} - {{ pokemon.nickname }}</div>
-              <div class="pokemon_size">{{ pokemon.height }}m - {{ pokemon.weight }}kg</div>
+              <div class="pokemon_size">{{ pokemon.height | number: 2}}m - {{ pokemon.weight | number: 2}}kg</div>
               <div class="pokemon_date">23/07/2016 ?</div>
             </div>
           </div>
