@@ -49,17 +49,19 @@
 
             <!-- name, size and date -->
             <div class="pokemon_info col-md-8">
-              <div class="pokemon_name">{{ pokemon.name }} - {{ pokemon.nickname }}</div>
-              <div class="pokemon_size">{{ pokemon.height | number: 2}}m - {{ pokemon.weight | number: 2}}kg</div>
-              <div class="pokemon_date">23/07/2016 ?</div>
+              <div class="pokemon_info">
+                <div class="pokemon_name">{{ pokemon.name }}{{pokemon.nickname === null ? "" : " - " + pokemon.nickname}}</div>
+                <div class="pokemon_size">{{ pokemon.height | number: 2}}m - {{ pokemon.weight | number: 2}}kg</div>
+              </div>
+              <div class="pokemon_fight">
+                  <div class="pokemon_cp">cp: {{ pokemon.cp }}</div>
+                  <div class="pokemon_stamina">stamina: {{ pokemon.stamina }} / {{ pokemon.stamina_max }}</div>
+                  <div class="pokemon_attacks">attacks: ? / ?</div>
+              </div>
             </div>
           </div>
 
-          <div class="row pokemon_fight">
-              <div class="pokemon_cp col-md-4">cp: {{ pokemon.cp }}</div>
-              <div class="pokemon_stamina col-md-4">stamina: {{ pokemon.stamina }} / {{ pokemon.stamina_max }}</div>
-              <div class="pokemon_attacks col-md-4">attacks: ? / ?</div>
-          </div>
+
         </div>
       </div>
 

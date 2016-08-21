@@ -136,7 +136,7 @@ function handleError(res, reason, message, code) {
          if (err) throw err;
 
          // initialize response
-         var response = {};
+         var cleanedInventory = { player_stats: null, eggs : [], pokemons: [], items: [] };
          var pokemonsArray = [];
 
          var inventoryDelta = inventory.inventory_delta;
@@ -144,51 +144,75 @@ function handleError(res, reason, message, code) {
 
          // loop over inventory items
          inventoryItems.forEach(function(item) {
-             if (item.inventory_item_data && item.inventory_item_data.pokemon){
-                 var pokemonTemp = item.inventory_item_data.pokemon;
+            var inventory_item_data = item.inventory_item_data;
 
-                 if (pokemonTemp != null && pokemonTemp.pokemon_id != null) {
-                     // the current entry is a pokemon
-                     var pokemonId = pokemonTemp.pokemon_id;
-                     var pokemonRet = {};
+            // check for pokemon (egg and real pokemons)
+            if (inventory_item_data.pokemon) {
+                var pokemon = inventory_item_data.pokemon;
+                if (pokemon.is_egg) {
+                    cleanedInventory.eggs.push(pokemon);
 
-                     // format the current pokemon data
-                     pokemonRet.pokemon_id = pokemonId;
-                     pokemonRet.name = PokemonsJSON.pokemon[pokemonId - 1].name;
-                     pokemonRet.img = PokemonsJSON.pokemon[pokemonId - 1].img;
-                     pokemonRet.type = PokemonsJSON.pokemon[pokemonId - 1].type;
-                     pokemonRet.height = pokemonTemp.height_m;
-                     pokemonRet.weight = pokemonTemp.weight_kg;
-                     pokemonRet.candy = null; // TODO
-                     pokemonRet.evolve = null;  // TODO
-                     pokemonRet.cp = pokemonTemp.cp;
-                     pokemonRet.stamina = pokemonTemp.stamina;
-                     pokemonRet.stamina_max = pokemonTemp.stamina_max;
-                     pokemonRet.favorite = pokemonTemp.favorite;
-                     pokemonRet.nickname = pokemonTemp.nickname;
+                } else {
+                  if (item.inventory_item_data && item.inventory_item_data.pokemon){
+                      var pokemonTemp = item.inventory_item_data.pokemon;
 
-                     // add the current pokemon into the array
-                     pokemonsArray.push(pokemonRet);
+                      if (pokemonTemp != null && pokemonTemp.pokemon_id != null) {
+                          // the current entry is a pokemon
+                          var pokemonId = pokemonTemp.pokemon_id;
+                          var pokemonRet = {};
+
+                          // format the current pokemon data
+                          pokemonRet.pokemon_id = pokemonId;
+                          pokemonRet.name = PokemonsJSON.pokemon[pokemonId - 1].name;
+                          pokemonRet.img = PokemonsJSON.pokemon[pokemonId - 1].img;
+                          pokemonRet.type = PokemonsJSON.pokemon[pokemonId - 1].type;
+                          pokemonRet.height = pokemonTemp.height_m;
+                          pokemonRet.weight = pokemonTemp.weight_kg;
+                          pokemonRet.candy = null; // TODO
+                          pokemonRet.evolve = null;  // TODO
+                          pokemonRet.cp = pokemonTemp.cp;
+                          pokemonRet.stamina = pokemonTemp.stamina;
+                          pokemonRet.stamina_max = pokemonTemp.stamina_max;
+                          pokemonRet.favorite = pokemonTemp.favorite;
+                          pokemonRet.nickname = pokemonTemp.nickname;
+
+                          // add the current pokemon into the array
+                          cleanedInventory.pokemons.push(pokemonRet);
+                     }
+                  }
                 }
-             }
+
+            }
+
+            // check for player stats
+            if (inventory_item_data.player_stats) {
+                var player = inventory_item_data.player_stats;
+                cleanedInventory.player_stats = player;
+            }
+
+            // check for item
+            if (inventory_item_data.item) {
+                var item = inventory_item_data.item;
+                cleanedInventory.items.push(item);
+            }
          });
 
          // sort the pokemons array depending on the pokemons name and then cp
-         pokemonsArray.sort(
+         cleanedInventory.pokemons.sort(
            function(a, b){
               if (a.pokemon_id != b.pokemon_id){
                  return (a.pokemon_id - b.pokemon_id);
               } else {
-                 return (a.cp - b.cp);
+                 return (b.cp - a.cp);
               }
            });
 
-         response.pokemons = pokemonsArray;
-         response.count = pokemonsArray.length; // the count in the mobile app includes the egg
-         response.max = inventoryItems.length; // not usre it is the real "max" value
+         //response.pokemons = pokemonsArray;
+         //response.count = pokemonsArray.length; // the count in the mobile app includes the egg
+         //response.max = inventoryItems.length; // not sure it is the real "max" value
 
-         // return the profile
-         res.status(200).json(response);
+         // return the full inventory
+         res.status(200).json(cleanedInventory);
      });
   });
 

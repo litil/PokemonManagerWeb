@@ -30,6 +30,8 @@
                   return ;
                 }
 
+                debugger;
+
                 // create an array of arrays
                 // inner arrays will contains pokemons of the same family
                 var pokemons = response.data.pokemons;
