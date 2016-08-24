@@ -30,8 +30,6 @@
                   return ;
                 }
 
-                debugger;
-
                 // create an array of arrays
                 // inner arrays will contains pokemons of the same family
                 var pokemons = response.data.pokemons;
@@ -54,6 +52,8 @@
                       arrayTemp = [];
                     }
                 }
+
+                debugger;
 
                 // set the pokemons list, grouped by families, into the scope
                 $scope.pokemonByFamily = pokemonFamiliesArray;
