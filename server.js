@@ -137,7 +137,7 @@ function handleError(res, reason, message, code) {
 
          // initialize response
          var cleanedInventory = { player_stats: null, eggs : [], pokemons: [], items: [] };
-         var pokemonsArray = [];
+         var familyMap = {};
 
          var inventoryDelta = inventory.inventory_delta;
          var inventoryItems = inventoryDelta.inventory_items;
@@ -168,13 +168,36 @@ function handleError(res, reason, message, code) {
                           pokemonRet.type = PokemonsJSON.pokemon[pokemonId - 1].type;
                           pokemonRet.height = pokemonTemp.height_m;
                           pokemonRet.weight = pokemonTemp.weight_kg;
-                          pokemonRet.candy = null; // TODO
                           pokemonRet.evolve = null;  // TODO
                           pokemonRet.cp = pokemonTemp.cp;
                           pokemonRet.stamina = pokemonTemp.stamina;
                           pokemonRet.stamina_max = pokemonTemp.stamina_max;
                           pokemonRet.favorite = pokemonTemp.favorite;
                           pokemonRet.nickname = pokemonTemp.nickname;
+                          pokemonRet.move_1 = pokemonTemp.move_1;
+                          pokemonRet.move_2 = pokemonTemp.move_2;
+
+                          // candy
+                          // in pokemon json we have something like : "candy": "50 Staryu Candy"
+                          var candyName = PokemonsJSON.pokemon[pokemonId - 1].candy;
+                          candyName = candyName.substring(candyName.indexOf(" ") + 1, candyName.length);
+                          candyName = candyName.substring(0, candyName.indexOf(" "));
+                          pokemonRet.candy = {};
+                          pokemonRet.candy.name = candyName;
+
+                          // evolution
+                          var candyStr = PokemonsJSON.pokemon[pokemonId - 1].candy;
+                          if (candyStr !== "None") {
+                            // it means this pokemon evolves
+                            pokemonRet.evolve = {};
+
+                            // we hope that the evolution is the next pokemon in the list
+                            pokemonRet.evolve.name = PokemonsJSON.pokemon[pokemonId].name;
+                            pokemonRet.evolve.id = PokemonsJSON.pokemon[pokemonId].id;
+
+                            // needed candies
+                            pokemonRet.evolve.needed_candies = candyStr.substring(0, candyStr.indexOf(" "));
+                          }
 
                           // add the current pokemon into the array
                           cleanedInventory.pokemons.push(pokemonRet);
@@ -195,6 +218,14 @@ function handleError(res, reason, message, code) {
                 var item = inventory_item_data.item;
                 cleanedInventory.items.push(item);
             }
+
+            // check for pokemon family
+            if(inventory_item_data.pokemon_family){
+                var pokemon = inventory_item_data.pokemon_family;
+                var id = pokemon['family_id'];
+                var candy = pokemon['candy'];
+                familyMap[PokemonsJSON.pokemon[id - 1].name] = candy;
+            }
          });
 
          // sort the pokemons array depending on the pokemons name and then cp
@@ -206,6 +237,14 @@ function handleError(res, reason, message, code) {
                  return (b.cp - a.cp);
               }
            });
+
+         // set the family candy information into each pokemon
+         cleanedInventory.pokemons.forEach(function(item) {
+            // we have a map family name / candy count
+            if (item.candy.name !== undefined){
+              item.candy.count = familyMap[item.candy.name];
+            }
+         });
 
          //response.pokemons = pokemonsArray;
          //response.count = pokemonsArray.length; // the count in the mobile app includes the egg

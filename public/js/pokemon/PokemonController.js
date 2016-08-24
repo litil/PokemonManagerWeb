@@ -38,6 +38,11 @@
 
                 // loop over returned pokemons to build the families arrays
                 for (var i = 0; i < pokemons.length; i++) {
+
+                    if (pokemons[i].name === "Ekans") {
+                      debugger;
+                    }
+
                     if (i === 0){
                       arrayTemp.push(pokemons[i]);
 
@@ -49,11 +54,12 @@
                       // not the same pokemon family
                       // add the previous array to the families array
                       pokemonFamiliesArray.push(arrayTemp);
+
+                      // clear the arrayTemp and add the current pokemon
                       arrayTemp = [];
+                      arrayTemp.push(pokemons[i]);
                     }
                 }
-
-                debugger;
 
                 // set the pokemons list, grouped by families, into the scope
                 $scope.pokemonByFamily = pokemonFamiliesArray;
