@@ -32,8 +32,8 @@
 
       <!-- evolution -->
       <div class="family_evolution col-md-3" ng-hide="{{ family[0].evolve }} | isEmpty">
-        <div class="family_name">???</div>
-        <div class="family_candy">{{ family[0].evolve.needed_candies }} {{ family[0].candy.name }} candies => {{ family[0].evolve.name }}</div>
+        <div class="family_name">{{ family[0].evolve.name }}</div>
+        <div class="family_candy">{{ family[0].evolve.needed_candies }} {{ family[0].candy.name }} candies to evolve </div>
       </div>
     </div>
 
