@@ -278,7 +278,34 @@ function handleError(res, reason, message, code) {
    user.TransferPokemon(pokemonId, function(err, catchPokemonResponse) {
          if (err) throw err;
 
-         console.log("boum boum");
+         // return the full inventory
+         res.status(200).json(catchPokemonResponse);
+     });
+  });
+
+
+  /*
+   * "/pokemons/evolve"
+   * POST: evolves the pokemon corresponding to the given id
+   *
+   */
+  app.post("/pokemons/evolve", function(req, res) {
+    // check params emptiness
+    if(!(req.body.user)) {
+      handleError(res, "Invalid user input", "Must provide user", 400);
+    }
+
+   // initialize user
+   var user = new PokemonGO.Pokeio();
+   user.playerInfo = req.body.user.playerInfo;
+
+   // get the pokemon id
+   var pokemonId = req.body.pokemonId;
+   console.log(pokemonId);
+
+   user.EvolvePokemon(pokemonId, function(err, catchPokemonResponse) {
+         // for some reason, we have an error with : Error: Illegal wire type for field Message.Field .ResponseEnvelop.Pokemon.cp_multiplier: 5 (1 expected)
+         if (err) throw err;
 
          // return the full inventory
          res.status(200).json(catchPokemonResponse);

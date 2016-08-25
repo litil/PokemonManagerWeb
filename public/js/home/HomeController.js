@@ -18,6 +18,8 @@
         this.getProfile = function() {
           var profile = ProfileService.getProfile();
 
+          debugger;
+
           if(!profile.username){
             $location.path('/auth');
           } else if (profile.currency[1]){

@@ -27,7 +27,7 @@
           }
           user = JSON.parse(user);
 
-          // call the getPokemonsList method of the PokemonService
+          // call the transferPokemon method of the PokemonService
           PokemonService.transferPokemon(user, pokemonId).then(function(response) {
               if (!response || !response.data){
                 alert('No response from the pokemon transfer attempt');
@@ -46,8 +46,29 @@
          * This method evolves the pokemon corresponding to the given id.
          */
         $scope.evolvePokemon = function(pokemonId) {
-          debugger;
+          // check user existence in local storage
+          // redirect to /auth if none is found
+          var user = localStorage.getItem("user");
+          if (!user || !JSON.parse(user).playerInfo) {
+            $location.path( "/auth");
+          }
+          user = JSON.parse(user);
 
+          // call the evolvePokemon method of the PokemonService
+          PokemonService.evolvePokemon(user, pokemonId).then(function(response) {
+              /*
+              if (!response || !response.data){
+                alert('No response from the pokemon transfer attempt');
+                return ;
+              }
+              */
+
+              // call the pokemon list again to update the UI
+              $scope.getPokemonsList();
+
+          }, function(response) {
+              alert(response);
+          });
         }
 
         /**

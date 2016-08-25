@@ -26,6 +26,16 @@
                   });
             }
 
+            this.evolvePokemon = function(user, pokemonId){
+              debugger;
+              return $http.post("/pokemons/evolve", {'user' : user, 'pokemonId' : pokemonId}).
+                  then(function(response) {
+                      return response;
+                  }, function(response) {
+                      alert("Error transfering the pokemon");
+                  });
+            }
+
         });
 
 })();
