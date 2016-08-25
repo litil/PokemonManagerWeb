@@ -114,6 +114,57 @@ function handleError(res, reason, message, code) {
   });
 
 
+  // POKEDEX routes below
+
+  /*
+   * "/pokedex"
+   * POST: fetch pokedex information
+   *
+   */
+  app.post("/pokedex", function(req, res) {
+    // check params emptiness
+    if(!(req.body.user)) {
+      handleError(res, "Invalid user input", "Must provide user", 400);
+    }
+
+   // initialize user
+   var user = new PokemonGO.Pokeio();
+   user.playerInfo = req.body.user.playerInfo;
+   user.GetInventory(function(err, inventory) {
+         if (err) throw err;
+
+         // initialize response
+         var cleanedInventory = { player_stats: null, eggs : [], pokemons: [], items: [] };
+
+         var inventoryDelta = inventory.inventory_delta;
+         var inventoryItems = inventoryDelta.inventory_items;
+
+         // loop over inventory items
+         inventoryItems.forEach(function(item) {
+            var inventory_item_data = item.inventory_item_data;
+
+            // check for pokemon (egg and real pokemons)
+            if (inventory_item_data.pokemon) {
+                var pokemon = inventory_item_data.pokemon;
+                if (!pokemon.is_egg) {
+                  if (item.inventory_item_data && item.inventory_item_data.pokemon){
+                      var pokemonTemp = item.inventory_item_data.pokemon;
+
+                      if (pokemonTemp != null && pokemonTemp.pokemon_id != null) {
+                          // the current entry is a pokemon
+                          var pokemonId = pokemonTemp.pokemon_id;
+                          PokemonsJSON.pokemon[pokemonId - 1].in_inventory = true
+                     }
+                  }
+                }
+            }
+         });
+
+         // return the full inventory
+         res.status(200).json(PokemonsJSON);
+     });
+  });
+
 
   // POKEMONS routes below
 

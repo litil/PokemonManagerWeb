@@ -81,3 +81,34 @@ body {
   }
 
 }
+
+/*************************************************************************/
+/*                                                                       */
+/*                             POKEDEX                                   */
+/*                                                                       */
+/*************************************************************************/
+#pokedex_container {
+
+  .pokemon_card {
+    background-color: @light-gray;
+    border: @border-gray;
+    .border-radius(10px);
+    margin: 10px 0px 10px 0px;
+    padding: 10px;
+    min-height: 145px;
+
+    .pokemon_image{
+      img {
+        width: 120px;
+        heigh: 120px;
+      }
+    }
+
+    .pokemon_info {
+      .pokemon_name {
+        font-weight: bold;
+      }
+    }
+  }
+
+}

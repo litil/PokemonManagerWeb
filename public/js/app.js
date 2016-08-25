@@ -9,6 +9,10 @@ angular.module("pokemonManagerApp", ['ngRoute'])
                 controller: "PokemonController",
                 templateUrl: "pokemons.html"
             })
+            .when("/pokedex", {
+                controller: "PokedexController",
+                templateUrl: "pokedex.html"
+            })
             .when("/auth", {
                 controller: "AuthController",
                 templateUrl: "auth.html"
