@@ -1,10 +1,11 @@
 <div class = "row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <h2>
       Pokedex
     </h2>
     <span>
-      In the current PokemonGo version, you can catch 
+      In the current PokemonGo version, you can catch <b>{{pokemonsCount}} pokemons</b> gathered in
+      <b>{{familiesCount}} families</b>.
     </span>
   </div>
 </div>
@@ -29,6 +30,9 @@
               <div class="pokemon_name">{{ pokemon.name }}</div>
               <div class="pokemon_type">{{ pokemon.type}}</div>
               <div class="pokemon_candy">{{ pokemon.candy !== "None" ? pokemon.candy : "Do not evolve"}}</div>
+              <div class="pokemon_in_inventory" ng-class="pokemon.in_inventory ? 'caught' : 'not-caught'">
+                {{ pokemon.in_inventory === true ? "You caught it!" : "Find it!"}}
+              </div>
             </div>
           </div>
 

@@ -50,10 +50,10 @@
                   }
                 }
 
-                debugger;
-
                 // set the pokemons list into the scope
                 $scope.pokemonFamiliesArray = pokemonFamiliesArray;
+                $scope.pokemonsCount = pokemons.length;
+                $scope.familiesCount = pokemonFamiliesArray.length;
 
             }, function(response) {
                 alert(response);
