@@ -17,6 +17,14 @@
                   });
             }
 
+            this.transferPokemon = function(user, pokemonId){
+              return $http.post("/pokemons/transfer", {'user' : user, 'pokemonId' : pokemonId}).
+                  then(function(response) {
+                      return response;
+                  }, function(response) {
+                      alert("Error transfering the pokemon");
+                  });
+            }
 
         });
 

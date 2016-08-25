@@ -26,7 +26,7 @@
 
       <!-- stardust and candies -->
       <div class="family_store col-md-3">
-        <div class="family_stardust">???</div>
+        <div class="family_stardust">{{ stardust }}</div>
         <div class="family_candy">{{ family[0].candy.count }} {{ family[0].candy.name }} candies</div>
       </div>
 
@@ -57,6 +57,10 @@
                   <div class="pokemon_cp">cp: {{ pokemon.cp }}</div>
                   <div class="pokemon_stamina">stamina: {{ pokemon.stamina }} / {{ pokemon.stamina_max }}</div>
                   <div class="pokemon_attacks">attacks: ? / ?</div>
+              </div>
+              <div class="pokemon_action">
+                  <button class="btn btn-sucess" ng-click="transferPokemon(pokemon.id)">Transfer</button>
+                  <button class="btn btn-sucess" ng-click="evolvePokemon(pokemon.id)">Evolve</button>
               </div>
             </div>
           </div>

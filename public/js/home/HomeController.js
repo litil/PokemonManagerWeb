@@ -9,7 +9,7 @@
         .controller('HomeController', HomeController);
 
 
-    function HomeController($scope, $location, ProfileService) {
+    function HomeController($scope, $rootScope, $location, ProfileService) {
 
         /**
          * This method returns the profile set in the ProfileService. If the
@@ -20,6 +20,9 @@
 
           if(!profile.username){
             $location.path('/auth');
+          } else if (profile.currency[1]){
+            // set the stardust into the root scope (UGLY!)
+            $rootScope.stardust = profile.currency[1].amount;
           }
 
           return profile;

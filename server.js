@@ -88,7 +88,7 @@ function handleError(res, reason, message, code) {
 
  /*
   * "/profile"
-  * GET: fetch basic profile information corresponding to the given user.
+  * POST: fetch basic profile information corresponding to the given user.
   *
   */
   app.post("/profile", function(req, res) {
@@ -119,7 +119,7 @@ function handleError(res, reason, message, code) {
 
   /*
    * "/profile"
-   * GET: fetch all already catched pokemons, formats and returns them. It
+   * POST: fetch all already catched pokemons, formats and returns them. It
    * fetches the pokemons by calling the GetInventory method.
    *
    */
@@ -162,6 +162,7 @@ function handleError(res, reason, message, code) {
                           var pokemonRet = {};
 
                           // format the current pokemon data
+                          pokemonRet.id = pokemon.id;
                           pokemonRet.pokemon_id = pokemonId;
                           pokemonRet.name = PokemonsJSON.pokemon[pokemonId - 1].name;
                           pokemonRet.img = PokemonsJSON.pokemon[pokemonId - 1].img;
@@ -252,6 +253,35 @@ function handleError(res, reason, message, code) {
 
          // return the full inventory
          res.status(200).json(cleanedInventory);
+     });
+  });
+
+
+  /*
+   * "/pokemons/transfer"
+   * POST: transfers the pokemon corresponding to the given id
+   *
+   */
+  app.post("/pokemons/transfer", function(req, res) {
+    // check params emptiness
+    if(!(req.body.user)) {
+      handleError(res, "Invalid user input", "Must provide user", 400);
+    }
+
+   // initialize user
+   var user = new PokemonGO.Pokeio();
+   user.playerInfo = req.body.user.playerInfo;
+
+   // get the pokemon id
+   var pokemonId = req.body.pokemonId;
+
+   user.TransferPokemon(pokemonId, function(err, catchPokemonResponse) {
+         if (err) throw err;
+
+         console.log("boum boum");
+
+         // return the full inventory
+         res.status(200).json(catchPokemonResponse);
      });
   });
 

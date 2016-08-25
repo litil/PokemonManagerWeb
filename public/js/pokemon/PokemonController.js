@@ -14,6 +14,49 @@
         // initialize the user variable - debug purpose only
         $scope.user = {};
 
+
+        /**
+         * This method transfers the pokemon corresponding to the given id.
+         */
+        $scope.transferPokemon = function(pokemonId) {
+          // check user existence in local storage
+          // redirect to /auth if none is found
+          var user = localStorage.getItem("user");
+          if (!user || !JSON.parse(user).playerInfo) {
+            $location.path( "/auth");
+          }
+          user = JSON.parse(user);
+
+          // call the getPokemonsList method of the PokemonService
+          PokemonService.transferPokemon(user, pokemonId).then(function(response) {
+              if (!response || !response.data){
+                alert('No response from the pokemon transfer attempt');
+                return ;
+              }
+
+              // call the pokemon list again to update the UI
+              $scope.getPokemonsList();
+
+          }, function(response) {
+              alert(response);
+          });
+        }
+
+        /**
+         * This method evolves the pokemon corresponding to the given id.
+         */
+        $scope.evolvePokemon = function(pokemonId) {
+          debugger;
+
+        }
+
+        /**
+         * This method gets the list of pokemons from the server. The server
+         * actually gets the inventory and returns the list of pokemons, eggs
+         * and items.
+         *
+         * Then, this method groups the pokemons by family.
+         */
         $scope.getPokemonsList = function() {
             // check user existence in local storage
             // redirect to /auth if none is found
@@ -38,10 +81,6 @@
 
                 // loop over returned pokemons to build the families arrays
                 for (var i = 0; i < pokemons.length; i++) {
-
-                    if (pokemons[i].name === "Ekans") {
-                      debugger;
-                    }
 
                     if (i === 0){
                       arrayTemp.push(pokemons[i]);
@@ -69,6 +108,7 @@
             });
         }
 
+        $scope.stardust = $rootScope.stardust;
         $scope.getPokemonsList();
 
     }
