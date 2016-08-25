@@ -36,9 +36,24 @@
                 // create an array of arrays
                 // inner arrays will contains pokemons of the same family
                 var pokemons = response.data.pokemon;
+                var pokemonFamiliesArray = [];
+                var arrayTemp = [];
+
+                for (var i = 0; i < pokemons.length; i++) {
+                  if (i === 0 || pokemons[i].candy !== "None"){
+                    arrayTemp.push(pokemons[i]);
+
+                  } else {
+                      arrayTemp.push(pokemons[i]);
+                      pokemonFamiliesArray.push(arrayTemp);
+                      arrayTemp = [];
+                  }
+                }
+
+                debugger;
 
                 // set the pokemons list into the scope
-                $scope.pokemons = pokemons;
+                $scope.pokemonFamiliesArray = pokemonFamiliesArray;
 
             }, function(response) {
                 alert(response);
