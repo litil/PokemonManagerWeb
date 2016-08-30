@@ -9,7 +9,7 @@
         .controller('PokemonController', PokemonController);
 
 
-    function PokemonController($scope, $location, $rootScope, PokemonService) {
+    function PokemonController($scope, $location, $rootScope, growl, PokemonService) {
 
         // initialize the user variable - debug purpose only
         $scope.user = {};
@@ -56,12 +56,17 @@
 
           // call the evolvePokemon method of the PokemonService
           PokemonService.evolvePokemon(user, pokemonId).then(function(response) {
-              /*
               if (!response || !response.data){
                 alert('No response from the pokemon transfer attempt');
                 return ;
               }
-              */
+
+              var pokemon = response.data.pokemon;
+              var award = response.data.award;
+              var successMessage = 'You successfully evolved your pokemon into a ' +
+                pokemon.type + ' with ' + pokemon.cp + ' cp and ' + pokemon.stamina_max + 'stamina.';
+                successMessage = 'You earned ' + award.candy + ' candy and ' + award.xp + ' XP (static!)';
+              growl.success(successMessage,{title: 'Pokemon has evolved!'});
 
               // call the pokemon list again to update the UI
               $scope.getPokemonsList();

@@ -1,4 +1,4 @@
-angular.module("pokemonManagerApp", ['ngRoute'])
+angular.module("pokemonManagerApp", ['ngRoute', 'angular-growl'])
     .config(function($routeProvider) {
         $routeProvider
             .when("/home", {

@@ -358,8 +358,32 @@ function handleError(res, reason, message, code) {
          // for some reason, we have an error with : Error: Illegal wire type for field Message.Field .ResponseEnvelop.Pokemon.cp_multiplier: 5 (1 expected)
          if (err) throw err;
 
+         var pokemonTemp = catchPokemonResponse.EvolvedPokemon;
+         var pokemonId = pokemonTemp.pokemon_type;
+         var pokemonRet = {};
+
+         console.log('pokemon id' + pokemonId);
+         console.log('pokemon name' + PokemonsJSON.pokemon[pokemonId - 1].name);
+
+         // format the current pokemon data
+         pokemonRet.id = pokemonTemp.id;
+         pokemonRet.pokemon_id = pokemonId;
+         pokemonRet.name = PokemonsJSON.pokemon[pokemonId - 1].name;
+         pokemonRet.img = PokemonsJSON.pokemon[pokemonId - 1].img;
+         pokemonRet.type = PokemonsJSON.pokemon[pokemonId - 1].type;
+         pokemonRet.height = pokemonTemp.height_m;
+         pokemonRet.weight = pokemonTemp.weight_kg;
+         pokemonRet.cp = pokemonTemp.cp;
+         pokemonRet.stamina = pokemonTemp.stamina;
+         pokemonRet.stamina_max = pokemonTemp.stamina_max;
+
+         var response = {'pokemon' : pokemonRet};
+         response.award = {};
+         response.award.xp = {'xp' : catchPokemonResponse.ExpAwarded};
+         response.award.candy = {'candy' : catchPokemonResponse.candyAwarded};
+
          // return the full inventory
-         res.status(200).json(catchPokemonResponse);
+         res.status(200).json(response);
      });
   });
 

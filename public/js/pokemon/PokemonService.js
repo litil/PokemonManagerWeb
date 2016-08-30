@@ -27,7 +27,6 @@
             }
 
             this.evolvePokemon = function(user, pokemonId){
-              debugger;
               return $http.post("/pokemons/evolve", {'user' : user, 'pokemonId' : pokemonId}).
                   then(function(response) {
                       return response;

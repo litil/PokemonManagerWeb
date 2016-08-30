@@ -15,7 +15,11 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
+    <!-- angular growl -->
+    <script src="js/angular-growl.min.js"></script>
+
     <!-- CSS built with LESS -->
+    <link href="css/angular-growl.min.css" rel="stylesheet" media="screen"/>
     <link rel="stylesheet/less" type="text/css" href="css/main.less" />
     <script type="text/javascript" src="js/less.js"></script>
 
@@ -47,6 +51,7 @@
     </nav>
     <!-- Dynamically render templates -->
     <div class="container" id="main-view" ng-view>
+      <div growl></div> <!-- adding the grow directive to html -->
     </div>
   </body>
 </html>
